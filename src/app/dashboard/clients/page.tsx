@@ -12,7 +12,7 @@ export default async function ClientsPage() {
         <h1 className="text-3xl font-bold text-gray-900">Clientes</h1>
         <Link
           href="/dashboard/clients/new"
-          className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
+          className="bg-indigo-600 text-white px-4 py-2 mt-2 rounded-md hover:bg-indigo-700"
         >
           Novo Cliente
         </Link>
