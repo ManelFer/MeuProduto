@@ -69,114 +69,114 @@ export default function ProductForm({ product }: ProductFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6 space-y-4">
+    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-pastel p-8 space-y-6 border border-soft-border">
       <div>
-        <label className="block text-sm font-medium text-gray-700">Nome *</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Nome *</label>
         <input
           type="text"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 placeholder-gray-400 focus:border-pastel-green-hover focus:ring-2 focus:ring-pastel-green outline-none transition-all"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Descrição</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Descrição</label>
         <textarea
           rows={3}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 placeholder-gray-400 focus:border-pastel-green-hover focus:ring-2 focus:ring-pastel-green outline-none transition-all resize-none"
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700">SKU (patrimonio)</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">SKU *</label>
           <input
             type="text"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 placeholder-gray-400 focus:border-pastel-green-hover focus:ring-2 focus:ring-pastel-green outline-none transition-all"
             value={formData.sku}
             onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Categoria</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Categoria</label>
           <input
             type="text"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 placeholder-gray-400 focus:border-pastel-green-hover focus:ring-2 focus:ring-pastel-green outline-none transition-all"
             value={formData.category}
             onChange={(e) => setFormData({ ...formData, category: e.target.value })}
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Preço de Venda *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Preço de Venda *</label>
           <input
             type="number"
             step="0.01"
             min="0"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 placeholder-gray-400 focus:border-pastel-green-hover focus:ring-2 focus:ring-pastel-green outline-none transition-all"
             value={formData.price}
             onChange={(e) => setFormData({ ...formData, price: e.target.value })}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Custo *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Custo *</label>
           <input
             type="number"
             step="0.01"
             min="0"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 placeholder-gray-400 focus:border-pastel-green-hover focus:ring-2 focus:ring-pastel-green outline-none transition-all"
             value={formData.cost}
             onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Estoque Atual *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Estoque Atual *</label>
           <input
             type="number"
             min="0"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 placeholder-gray-400 focus:border-pastel-green-hover focus:ring-2 focus:ring-pastel-green outline-none transition-all"
             value={formData.stock}
             onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Estoque Mínimo *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Estoque Mínimo *</label>
           <input
             type="number"
             min="0"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 placeholder-gray-400 focus:border-pastel-green-hover focus:ring-2 focus:ring-pastel-green outline-none transition-all"
             value={formData.minStock}
             onChange={(e) => setFormData({ ...formData, minStock: e.target.value })}
           />
         </div>
       </div>
 
-      <div className="flex justify-end space-x-4">
+      <div className="flex justify-end gap-4 pt-4 border-t border-soft-border">
         <button
           type="button"
           onClick={() => router.back()}
-          className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+          className="px-6 py-3 rounded-xl border border-soft-border text-gray-700 bg-white hover:bg-soft-gray transition-all font-medium"
         >
           Cancelar
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50"
+          className="px-6 py-3 rounded-xl bg-pastel-green text-gray-900 hover:bg-pastel-green-hover disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-pastel"
         >
           {loading ? "Salvando..." : "Salvar"}
         </button>

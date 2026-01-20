@@ -53,13 +53,13 @@ export default function Sidebar() {
   return (
     <>
       {/* Mobile menu button */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-pastel">
         <div className="flex items-center justify-between p-4">
-          <h1 className="text-lg font-bold text-gray-900">Sistema de Controle</h1>
-          
+          <h1 className="text-lg font-semibold text-gray-800">Sistema de Controle</h1>
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+            className="p-2 rounded-xl text-gray-600 hover:text-gray-900 hover:bg-pastel-lavender transition-colors"
+            aria-label="Toggle menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMobileMenuOpen ? (
@@ -75,50 +75,50 @@ export default function Sidebar() {
       {/* Sidebar */}
       <aside
         className={`
-          fixed top-0 left-0 z-40 h-screen transition-transform
+          fixed top-0 left-0 z-40 h-screen transition-transform duration-300 ease-in-out
           ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0
-          w-64 bg-gray-900 text-white
+          w-64 bg-gradient-to-b from-pastel-lavender/30 to-white border-r border-soft-border
         `}
       >
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="flex items-center justify-center h-16 px-4 border-b border-gray-800">
-            <h1 className="text-xl font-bold">Sistema de Controle</h1>
+          <div className="flex items-center justify-center h-16 px-4 border-b border-soft-border">
+            <h1 className="text-xl font-semibold text-gray-800">Sistema de Controle</h1>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+          <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
             {menuItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`
-                  flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors
+                  flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200
                   ${
                     isActive(item.href)
-                      ? "bg-indigo-600 text-white"
-                      : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                      ? "bg-pastel-lavender text-gray-900 shadow-pastel"
+                      : "text-gray-700 hover:bg-pastel-lavender/50 hover:text-gray-900"
                   }
                 `}
               >
                 {item.icon}
-                <span className="font-medium">{item.label}</span>
+                <span className="font-medium text-sm">{item.label}</span>
               </Link>
             ))}
           </nav>
 
           {/* User section */}
-          <div className="px-4 py-4 border-t border-gray-800">
+          <div className="px-3 py-4 border-t border-soft-border">
             <button
               onClick={() => signOut({ callbackUrl: "/login" })}
-              className="flex items-center space-x-3 w-full px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white transition-colors"
+              className="flex items-center space-x-3 w-full px-4 py-3 rounded-xl text-gray-700 hover:bg-pastel-pink/50 hover:text-gray-900 transition-all duration-200"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
-              <span className="font-medium">Sair</span>
+              <span className="font-medium text-sm">Sair</span>
             </button>
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function Sidebar() {
       {/* Overlay for mobile */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}

@@ -143,13 +143,13 @@ export default function OrderForm() {
   const totalAmount = items.reduce((sum, item) => sum + item.totalPrice, 0);
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6 space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-pastel p-8 space-y-6 border border-soft-border">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Cliente *</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Cliente *</label>
           <select
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 focus:border-pastel-orange-hover focus:ring-2 focus:ring-pastel-orange outline-none transition-all"
             value={formData.clientId}
             onChange={(e) => setFormData({ ...formData, clientId: e.target.value })}
           >
@@ -164,10 +164,10 @@ export default function OrderForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Descrição do Serviço</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Descrição do Serviço</label>
         <textarea
           rows={4}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 placeholder-gray-400 focus:border-pastel-orange-hover focus:ring-2 focus:ring-pastel-orange outline-none transition-all resize-none"
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
         />
@@ -175,11 +175,11 @@ export default function OrderForm() {
 
       <div>
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Itens/Serviços</h2>
+          <h2 className="text-lg font-semibold text-gray-800">Itens/Serviços</h2>
           <button
             type="button"
             onClick={addItem}
-            className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 text-sm"
+            className="px-4 py-2 rounded-xl bg-pastel-green text-gray-900 hover:bg-pastel-green-hover text-sm font-medium shadow-pastel transition-all"
           >
             Adicionar Item
           </button>
@@ -190,12 +190,12 @@ export default function OrderForm() {
         ) : (
           <div className="space-y-4">
             {items.map((item) => (
-              <div key={item.id} className="border rounded-lg p-4 space-y-4">
+              <div key={item.id} className="border border-soft-border rounded-xl p-6 space-y-4 bg-soft-gray/30">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Produto (opcional)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Produto (opcional)</label>
                     <select
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                      className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 focus:border-pastel-orange-hover focus:ring-2 focus:ring-pastel-orange outline-none transition-all"
                       value={item.productId}
                       onChange={(e) => updateItem(item.id, "productId", e.target.value)}
                     >
@@ -208,11 +208,11 @@ export default function OrderForm() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Descrição *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Descrição *</label>
                     <input
                       type="text"
                       required
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                      className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 placeholder-gray-400 focus:border-pastel-orange-hover focus:ring-2 focus:ring-pastel-orange outline-none transition-all"
                       value={item.description}
                       onChange={(e) => updateItem(item.id, "description", e.target.value)}
                     />
@@ -220,39 +220,39 @@ export default function OrderForm() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Quantidade *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Quantidade *</label>
                     <input
                       type="number"
                       min="1"
                       required
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                      className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 focus:border-pastel-orange-hover focus:ring-2 focus:ring-pastel-orange outline-none transition-all"
                       value={item.quantity}
                       onChange={(e) => updateItem(item.id, "quantity", e.target.value)}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Preço Unitário *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Preço Unitário *</label>
                     <input
                       type="number"
                       step="0.01"
                       min="0"
                       required
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                      className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 focus:border-pastel-orange-hover focus:ring-2 focus:ring-pastel-orange outline-none transition-all"
                       value={item.unitPrice}
                       onChange={(e) => updateItem(item.id, "unitPrice", e.target.value)}
                     />
                   </div>
                   <div className="flex items-end">
                     <div className="flex-1">
-                      <label className="block text-sm font-medium text-gray-700">Total</label>
-                      <p className="mt-1 text-lg font-semibold text-gray-900">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Total</label>
+                      <p className="text-lg font-semibold text-gray-800">
                         R$ {item.totalPrice.toFixed(2)}
                       </p>
                     </div>
                     <button
                       type="button"
                       onClick={() => removeItem(item.id)}
-                      className="ml-4 text-red-600 hover:text-red-900"
+                      className="ml-4 px-3 py-2 rounded-xl text-red-600 hover:bg-pastel-pink/50 transition-all"
                     >
                       Remover
                     </button>
@@ -260,11 +260,11 @@ export default function OrderForm() {
                 </div>
               </div>
             ))}
-            <div className="border-t pt-4">
+            <div className="border-t border-soft-border pt-4">
               <div className="flex justify-end">
                 <div className="text-right">
                   <p className="text-sm text-gray-600">Total da Ordem:</p>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <p className="text-2xl font-semibold text-gray-800">
                     R$ {totalAmount.toFixed(2)}
                   </p>
                 </div>
@@ -274,18 +274,18 @@ export default function OrderForm() {
         )}
       </div>
 
-      <div className="flex justify-end space-x-4">
+      <div className="flex justify-end gap-4 pt-4 border-t border-soft-border">
         <button
           type="button"
           onClick={() => router.back()}
-          className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+          className="px-6 py-3 rounded-xl border border-soft-border text-gray-700 bg-white hover:bg-soft-gray transition-all font-medium"
         >
           Cancelar
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50"
+          className="px-6 py-3 rounded-xl bg-pastel-orange text-gray-900 hover:bg-pastel-orange-hover disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-pastel"
         >
           {loading ? "Criando..." : "Criar Ordem"}
         </button>
