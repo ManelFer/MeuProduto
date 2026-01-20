@@ -1,29 +1,73 @@
-import { prisma } from "@/lib/prisma";
-import { notFound } from "next/navigation";
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
+import OrderStatusManager from "@/components/OrderStatusManager";
 
-export default async function OrderDetailPage({
+interface Client {
+  id: string;
+  name: string;
+  email: string | null;
+  phone: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  document: string | null;
+  address: string | null;
+  city: string | null;
+  state: string | null;
+  zipCode: string | null;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  description: string | null;
+  sku: string;
+  price: number;
+  cost: number;
+  stock: number;
+  minStock: number;
+  category: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface OrderItem {
+  id: string;
+  orderId: string;
+  productId: string | null;
+  product: Product | null;
+  description: string;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+}
+
+interface Order {
+  id: string;
+  clientId: string;
+  client: Client;
+  orderNumber: string;
+  status: string;
+  description: string | null;
+  items: OrderItem[];
+  totalAmount: number;
+  createdAt: Date;
+  updatedAt: Date;
+  signedAt: Date | null;
+  signedBy: string | null;
+}
+
+export default function OrderDetailPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const order = await prisma.order.findUnique({
-    where: { id: params.id },
-    include: {
-      client: true,
-      items: {
-        include: {
-          product: true,
-        },
-      },
-    },
-  });
-
-  if (!order) {
-    notFound();
-  }
+  const [order, setOrder] = useState<Order | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const statusLabels: Record<string, string> = {
     PENDING: "Pendente",
@@ -32,6 +76,43 @@ export default async function OrderDetailPage({
     DELIVERED: "Entregue",
     CANCELLED: "Cancelada",
   };
+
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/orders/${params.id}`);
+        if (!response.ok) {
+          throw new Error("Ordem não encontrada");
+        }
+        const data = await response.json();
+        setOrder(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Erro ao carregar ordem");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrder();
+  }, [params.id]);
+
+  const handleStatusChange = async (newStatus: string) => {
+    if (order) {
+      setOrder({
+        ...order,
+        status: newStatus,
+      });
+    }
+  };
+
+  if (loading) {
+    return <div className="text-center py-12">Carregando...</div>;
+  }
+
+  if (error || !order) {
+    return <div className="text-center py-12 text-red-600">{error || "Ordem não encontrada"}</div>;
+  }
 
   return (
     <div className="space-y-6">
@@ -49,7 +130,7 @@ export default async function OrderDetailPage({
       </div>
 
       <div className="bg-white shadow rounded-lg p-6 space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Informações do Cliente</h2>
             <div className="space-y-2 text-sm">
@@ -66,12 +147,19 @@ export default async function OrderDetailPage({
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Informações da Ordem</h2>
             <div className="space-y-2 text-sm">
               <p><span className="font-medium">Número:</span> {order.orderNumber}</p>
-              <p><span className="font-medium">Status:</span> {statusLabels[order.status]}</p>
               <p><span className="font-medium">Data:</span>{" "}
                 {format(new Date(order.createdAt), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
               </p>
               <p><span className="font-medium">Valor Total:</span> R$ {order.totalAmount.toFixed(2)}</p>
             </div>
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Gerenciar Status</h2>
+            <OrderStatusManager
+              orderId={order.id}
+              currentStatus={order.status}
+              onStatusChange={handleStatusChange}
+            />
           </div>
         </div>
 

@@ -56,6 +56,7 @@ export default function Sidebar() {
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
         <div className="flex items-center justify-between p-4">
           <h1 className="text-lg font-bold text-gray-900">Sistema de Controle</h1>
+          
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"

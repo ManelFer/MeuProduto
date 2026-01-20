@@ -7,7 +7,7 @@ export default async function ProductsPage() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-8">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-900">Controle de Estoque</h1>
         <Link
@@ -26,7 +26,7 @@ export default async function ProductsPage() {
                 Nome
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                SKU
+                SKU (patrimonio )
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Estoque

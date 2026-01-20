@@ -93,7 +93,7 @@ export default function ProductForm({ product }: ProductFormProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">SKU *</label>
+          <label className="block text-sm font-medium text-gray-700">SKU (patrimonio)</label>
           <input
             type="text"
             required

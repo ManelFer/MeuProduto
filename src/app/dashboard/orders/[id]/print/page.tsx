@@ -1,27 +1,80 @@
-import { prisma } from "@/lib/prisma";
-import { notFound } from "next/navigation";
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 
-export default async function PrintOrderPage({
+interface OrderWithRelations {
+  id: string;
+  orderNumber: string;
+  status: string;
+  description: string | null;
+  totalAmount: number;
+  createdAt: Date;
+  updatedAt: Date;
+  signedAt: Date | null;
+  signedBy: string | null;
+  clientId: string;
+  client: {
+    id: string;
+    name: string;
+    email: string | null;
+    phone: string | null;
+    document: string | null;
+    address: string | null;
+    city: string | null;
+    state: string | null;
+    zipCode: string | null;
+  };
+  items: Array<{
+    id: string;
+    orderId: string;
+    productId: string;
+    description: string;
+    quantity: number;
+    unitPrice: number;
+    totalPrice: number;
+    product: any;
+  }>;
+}
+
+export default function PrintOrderPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const order = await prisma.order.findUnique({
-    where: { id: params.id },
-    include: {
-      client: true,
-      items: {
-        include: {
-          product: true,
-        },
-      },
-    },
-  });
+  const router = useRouter();
+  const [order, setOrder] = useState<OrderWithRelations | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const response = await fetch(`/api/orders/${params.id}`);
+        if (!response.ok) {
+          router.push("/dashboard/orders");
+          return;
+        }
+        const data = await response.json();
+        setOrder(data);
+      } catch (error) {
+        console.error("Error fetching order:", error);
+        router.push("/dashboard/orders");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrder();
+  }, [params.id, router]);
+
+  if (loading) {
+    return <div className="p-8">Carregando...</div>;
+  }
 
   if (!order) {
-    notFound();
+    return <div className="p-8">Ordem não encontrada</div>;
   }
 
   const statusLabels: Record<string, string> = {
@@ -187,7 +240,7 @@ export default async function PrintOrderPage({
               _______________________________________
             </p>
             <p className="text-sm text-center font-bold">
-              ASSINATURA DO RESPONSÁVEL
+              ASSINATURA DO TéCNICO
             </p>
           </div>
         </div>
