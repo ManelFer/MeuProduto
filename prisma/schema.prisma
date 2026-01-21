@@ -38,6 +38,7 @@ model Client {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   orders    Order[]
+  sales     Sale[]
 }
 
 model Product {
@@ -53,6 +54,7 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   orderItems  OrderItem[]
+  saleItems   SaleItem[]
 }
 
 model Order {
@@ -93,4 +95,32 @@ enum OrderStatus {
   COMPLETED
   DELIVERED
   CANCELLED
+}
+
+model Sale {
+  id          String     @id @default(cuid())
+  saleNumber  String     @unique
+  clientId    String?
+  client      Client?    @relation(fields: [clientId], references: [id])
+  items       SaleItem[]
+  totalAmount Float      @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([clientId])
+  @@index([saleNumber])
+  @@index([createdAt])
+}
+
+model SaleItem {
+  id         String  @id @default(cuid())
+  saleId     String
+  sale       Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product @relation(fields: [productId], references: [id])
+  quantity   Int
+  unitPrice  Float
+  totalPrice Float
+
+  @@index([saleId])
 }

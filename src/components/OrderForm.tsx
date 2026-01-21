@@ -131,7 +131,8 @@ export default function OrderForm() {
         router.push("/dashboard/orders");
         router.refresh();
       } else {
-        alert("Erro ao criar ordem de serviço");
+        const data = await response.json().catch(() => ({}));
+        alert(data.error || "Erro ao criar ordem de serviço");
       }
     } catch (error) {
       alert("Erro ao criar ordem de serviço");

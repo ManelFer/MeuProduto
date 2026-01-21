@@ -1,11 +1,22 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
+async function getSalesCount(): Promise<number> {
+  try {
+    const saleDelegate = (prisma as { sale?: { count: () => Promise<number> } }).sale;
+    if (typeof saleDelegate?.count === "function") return await saleDelegate.count();
+    return 0;
+  } catch {
+    return 0;
+  }
+}
+
 export default async function DashboardPage() {
-  const [clientsCount, productsCount, ordersCount, allProducts] = await Promise.all([
+  const [clientsCount, productsCount, ordersCount, salesCount, allProducts] = await Promise.all([
     prisma.client.count(),
     prisma.product.count(),
     prisma.order.count(),
+    getSalesCount(),
     prisma.product.findMany({
       select: { id: true, name: true, sku: true, stock: true, minStock: true },
     }),
@@ -55,6 +66,19 @@ export default async function DashboardPage() {
       gradient: "from-white to-pastel-orange/40",
       iconBg: "bg-pastel-orange",
     },
+    {
+      href: "/dashboard/sales",
+      label: "Vendas",
+      value: salesCount,
+      sub: "vendas",
+      icon: (
+        <svg className="w-7 h-7 text-rose-600 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+      ),
+      gradient: "from-white to-pastel-pink/40",
+      iconBg: "bg-pastel-pink",
+    },
   ];
 
   return (
@@ -65,7 +89,7 @@ export default async function DashboardPage() {
       </header>
 
       {/* Cards principais */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {cards.map((card, i) => (
           <Link
             key={card.href}
