@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { name, email, password } = body;
+    const { name, email, password, role: roleArg } = body;
 
     if (!name || typeof name !== "string" || !name.trim()) {
       return NextResponse.json({ error: "Nome é obrigatório" }, { status: 400 });
@@ -48,6 +48,8 @@ export async function POST(request: Request) {
     if (!password || typeof password !== "string" || password.length < 6) {
       return NextResponse.json({ error: "Senha é obrigatória e deve ter no mínimo 6 caracteres" }, { status: 400 });
     }
+
+    const role = roleArg === "ADMIN" ? "ADMIN" : "USER";
 
     const existing = await prisma.user.findUnique({ where: { email: email.trim() } });
     if (existing) {
@@ -60,7 +62,7 @@ export async function POST(request: Request) {
         name: name.trim(),
         email: email.trim(),
         password: hashed,
-        role: "USER",
+        role,
       },
       select: { id: true, name: true, email: true, role: true, createdAt: true },
     });

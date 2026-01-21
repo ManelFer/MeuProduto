@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import AddUserForm from "@/components/AddUserForm";
+import DeleteUserButton from "@/components/DeleteUserButton";
 
 export default async function UsersPage() {
   const session = await getServerSession(authOptions);
@@ -17,7 +18,7 @@ export default async function UsersPage() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6">
       <h1 className="text-3xl font-semibold text-gray-800">Usuários</h1>
 
       <AddUserForm />
@@ -41,6 +42,9 @@ export default async function UsersPage() {
               <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                 Cadastrado em
               </th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                Ações
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-soft-border">
@@ -63,6 +67,13 @@ export default async function UsersPage() {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                   {format(new Date(u.createdAt), "dd/MM/yyyy", { locale: ptBR })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <DeleteUserButton
+                    userId={u.id}
+                    userName={u.name}
+                    isCurrentUser={u.id === session.user.id}
+                  />
                 </td>
               </tr>
             ))}

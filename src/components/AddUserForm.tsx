@@ -10,6 +10,7 @@ export default function AddUserForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<"USER" | "ADMIN">("USER");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +34,7 @@ export default function AddUserForm() {
       const res = await fetch("/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), email: email.trim(), password }),
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), password, role }),
       });
 
       const data = await res.json().catch(() => ({}));
@@ -47,6 +48,7 @@ export default function AddUserForm() {
       setName("");
       setEmail("");
       setPassword("");
+      setRole("USER");
       router.refresh();
     } catch {
       setMessage({ type: "err", text: "Erro ao cadastrar usuário." });
@@ -56,7 +58,7 @@ export default function AddUserForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-pastel p-6 border border-soft-border max-w-xl">
+    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-pastel p-6 border border-soft-border max-w-xl mx-auto">
       <h2 className="text-lg font-medium text-gray-800 mb-4">Adicionar usuário</h2>
 
       {message && (
@@ -90,6 +92,18 @@ export default function AddUserForm() {
             className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 placeholder-gray-400 focus:border-pastel-lavender-dark focus:ring-2 focus:ring-pastel-lavender outline-none transition-all"
           />
         </div>
+      </div>
+
+      <div className="mt-4">
+        <label className="block text-sm font-medium text-gray-700 mb-2">Perfil *</label>
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value as "USER" | "ADMIN")}
+          className="w-full px-4 py-3 rounded-xl border border-soft-border bg-white text-gray-800 focus:border-pastel-lavender-dark focus:ring-2 focus:ring-pastel-lavender outline-none transition-all"
+        >
+          <option value="USER">Usuário</option>
+          <option value="ADMIN">Administrador</option>
+        </select>
       </div>
 
       <div className="mt-4">
