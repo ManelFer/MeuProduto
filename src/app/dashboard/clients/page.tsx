@@ -7,7 +7,7 @@ export default async function ClientsPage() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-semibold text-gray-800">Clientes</h1>
         <Link
@@ -64,7 +64,7 @@ export default async function ClientsPage() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <Link
                       href={`/dashboard/clients/${client.id}/edit`}
-                      className="text-pastel-lavender-dark hover:text-gray-900 transition-colors"
+                      className="text-pastel-lavender-dark hover:text-purple-500 transition-colors"
                     >
                       Editar
                     </Link>
