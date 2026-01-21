@@ -131,6 +131,27 @@ body {
   .animate-scale-in {
     animation: scaleIn 0.3s ease-out;
   }
+
+  /* Card hover lift */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+  .card-hover:hover {
+    @apply -translate-y-1 shadow-pastel-hover;
+  }
+  .card-hover:active {
+    @apply translate-y-0 scale-[0.99];
+  }
+
+  /* Skeleton */
+  @keyframes shimmer {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+  }
+  .animate-shimmer {
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
 }
 
 /* Smooth transitions */

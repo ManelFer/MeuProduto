@@ -59,7 +59,7 @@ export default function AddUserForm() {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-pastel p-6 border border-soft-border max-w-xl mx-auto">
-      <h2 className="text-lg font-medium text-gray-800 mb-4">Adicionar usuário</h2>
+      <h2 className="text-lg font-medium text-gray-800 mb-4">Adicionar Funcionário</h2>
 
       {message && (
         <div
