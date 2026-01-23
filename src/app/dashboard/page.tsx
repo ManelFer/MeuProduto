@@ -11,8 +11,50 @@ async function getSalesCount(): Promise<number> {
   }
 }
 
+async function getSalesMetrics() {
+  try {
+    const saleDelegate = (prisma as { sale?: { findMany: (args: any) => Promise<any[]> } }).sale;
+    if (!saleDelegate || typeof saleDelegate.findMany !== "function") {
+      return { totalRevenue: 0, monthRevenue: 0, monthCount: 0, averageTicket: 0 };
+    }
+
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+
+    const [allSales, monthSales] = await Promise.all([
+      saleDelegate.findMany({
+        select: { totalAmount: true },
+      }),
+      saleDelegate.findMany({
+        where: {
+          createdAt: {
+            gte: startOfMonth,
+            lte: endOfMonth,
+          },
+        },
+        select: { totalAmount: true },
+      }),
+    ]);
+
+    const totalRevenue = allSales.reduce((sum, s) => sum + s.totalAmount, 0);
+    const monthRevenue = monthSales.reduce((sum, s) => sum + s.totalAmount, 0);
+    const monthCount = monthSales.length;
+    const averageTicket = allSales.length > 0 ? totalRevenue / allSales.length : 0;
+
+    return {
+      totalRevenue: Math.round(totalRevenue * 100) / 100,
+      monthRevenue: Math.round(monthRevenue * 100) / 100,
+      monthCount,
+      averageTicket: Math.round(averageTicket * 100) / 100,
+    };
+  } catch {
+    return { totalRevenue: 0, monthRevenue: 0, monthCount: 0, averageTicket: 0 };
+  }
+}
+
 export default async function DashboardPage() {
-  const [clientsCount, productsCount, ordersCount, salesCount, allProducts] = await Promise.all([
+  const [clientsCount, productsCount, ordersCount, salesCount, allProducts, salesMetrics] = await Promise.all([
     prisma.client.count(),
     prisma.product.count(),
     prisma.order.count(),
@@ -20,6 +62,7 @@ export default async function DashboardPage() {
     prisma.product.findMany({
       select: { id: true, name: true, sku: true, stock: true, minStock: true },
     }),
+    getSalesMetrics(),
   ]);
 
   const lowStockProducts = allProducts
@@ -112,6 +155,48 @@ export default async function DashboardPage() {
             </p>
           </Link>
         ))}
+      </section>
+
+      {/* Métricas financeiras */}
+      <section>
+        <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+          <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-pastel-green">
+            <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </span>
+          Métricas Financeiras
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-white rounded-2xl border border-soft-border shadow-pastel p-6">
+            <p className="text-sm font-medium text-gray-600">Receita Total</p>
+            <p className="mt-1 text-2xl font-bold text-gray-900 tabular-nums">
+              R$ {salesMetrics.totalRevenue.toFixed(2)}
+            </p>
+            <p className="mt-0.5 text-xs text-gray-500">Todas as vendas</p>
+          </div>
+          <div className="bg-white rounded-2xl border border-soft-border shadow-pastel p-6">
+            <p className="text-sm font-medium text-gray-600">Receita do Mês</p>
+            <p className="mt-1 text-2xl font-bold text-gray-900 tabular-nums">
+              R$ {salesMetrics.monthRevenue.toFixed(2)}
+            </p>
+            <p className="mt-0.5 text-xs text-gray-500">{salesMetrics.monthCount} venda(s) este mês</p>
+          </div>
+          <div className="bg-white rounded-2xl border border-soft-border shadow-pastel p-6">
+            <p className="text-sm font-medium text-gray-600">Ticket Médio</p>
+            <p className="mt-1 text-2xl font-bold text-gray-900 tabular-nums">
+              R$ {salesMetrics.averageTicket.toFixed(2)}
+            </p>
+            <p className="mt-0.5 text-xs text-gray-500">Média por venda</p>
+          </div>
+          <div className="bg-white rounded-2xl border border-soft-border shadow-pastel p-6">
+            <p className="text-sm font-medium text-gray-600">Vendas do Mês</p>
+            <p className="mt-1 text-2xl font-bold text-gray-900 tabular-nums">
+              {salesMetrics.monthCount}
+            </p>
+            <p className="mt-0.5 text-xs text-gray-500">Este mês</p>
+          </div>
+        </div>
       </section>
 
       {/* Alertas de estoque baixo */}

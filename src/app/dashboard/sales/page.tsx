@@ -28,8 +28,6 @@ export default async function SalesPage() {
         </Link>
       </div>
 
-      
-
       <div className="bg-white rounded-2xl shadow-pastel overflow-hidden border border-soft-border">
         <h2 className="px-6 py-4 text-lg font-medium text-gray-800 border-b border-soft-border">
           Últimas vendas
@@ -42,12 +40,13 @@ export default async function SalesPage() {
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Data</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Cliente</th>
                 <th className="px-6 py-4 text-right text-xs font-semibold text-gray-700 uppercase">Total</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Ações</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-soft-border">
               {sales.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-6 py-8 text-center text-gray-500">
+                  <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
                     Nenhuma venda registrada
                   </td>
                 </tr>
@@ -61,6 +60,21 @@ export default async function SalesPage() {
                     <td className="px-6 py-4 text-sm text-gray-600">{s.client?.name || "—"}</td>
                     <td className="px-6 py-4 text-sm font-medium text-gray-800 text-right">
                       R$ {s.totalAmount.toFixed(2)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-3">
+                      <Link
+                        href={`/dashboard/sales/${s.id}`}
+                        className="text-pastel-lavender-dark hover:text-gray-900 transition-colors"
+                      >
+                        Ver
+                      </Link>
+                      <Link
+                        href={`/dashboard/sales/${s.id}/print`}
+                        className="text-pastel-green-hover hover:text-gray-900 transition-colors"
+                        target="_blank"
+                      >
+                        Imprimir
+                      </Link>
                     </td>
                   </tr>
                 ))
