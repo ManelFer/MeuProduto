@@ -1,0 +1,66 @@
+Proposta Comercial
+
+Proposta para: [Nome do Cliente]
+Data: [DD/MM/AAAA]
+Preparado por: [Seu Nome / Sua Empresa]
+Contato: [email] | [telefone]
+
+RESUMO EXECUTIVO:
+Apresentamos esta proposta para [objetivo principal do projeto], com o objetivo de [benefício-chave para o cliente — ex.: aumentar vendas, automatizar processos, reduzir custos]. Propomos a execução de [breve descrição do serviço] no prazo estimado abaixo.
+
+OBJETIVOS:
+- Objetivo 1: [ex.: Implementar sistema de vendas online]
+- Objetivo 2: [ex.: Treinamento da equipe]
+
+ESCOPO DO PROJETO:
+- Atividade 1: Levantamento de requisitos, análise e definição detalhada do escopo.
+- Atividade 2: Design e prototipagem de telas (quando aplicável).
+- Atividade 3: Desenvolvimento e integração com sistemas existentes.
+- Atividade 4: Testes, correções e validação com o cliente.
+- Atividade 5: Treinamento da equipe e entrega de documentação.
+
+ENTREGÁVEIS:
+- Aplicação/solução funcional conforme escopo.
+- Código-fonte e instruções de deploy (quando aplicável).
+- Documentação técnica e manual do usuário.
+- Relatório de testes e checklist de validação.
+
+CRONOGRAMA (ESTIMADO):
+- Fase 1 — Planejamento: [X dias] — Início em [data]
+- Fase 2 — Desenvolvimento: [Y semanas]
+- Fase 3 — Testes e Ajustes: [Z dias]
+- Entrega Final: [data estimada]
+
+PREÇO E CONDIÇÕES COMERCIAIS:
+- Opção 1 — Pacote Básico: R$ [valor] — inclui [o que está incluso].
+- Opção 2 — Pacote Completo: R$ [valor] — inclui [mais serviços].
+- Forma de pagamento: [ex.: 50% na assinatura, 50% na entrega]
+- Validade da proposta: [30 dias]
+
+TERMOS E CONDIÇÕES:
+- Mudanças fora do escopo serão cobradas à parte mediante orçamento adicional.
+- Prazos dependem da colaboração do cliente para aprovações e fornecimento de informações.
+- Garantia: [ex.: 30 dias de suporte para correções de bugs após entrega]
+
+PREMISSAS E RESTRIÇÕES:
+- O cliente fornecerá acesso aos sistemas necessários e materiais no prazo acordado.
+- Não estão incluídos custos de terceiros (ex.: serviços de hospedagem, licenças) salvo indicação contrária.
+
+PRÓXIMOS PASSOS:
+1. Revisão desta proposta pelo cliente.
+2. Assinatura do contrato/aceite por e-mail.
+3. Pagamento da primeira parcela e agendamento de início.
+
+ACEITE:
+Ao assinar abaixo, o cliente concorda com o escopo, preços e termos desta proposta.
+
+Nome do Cliente: ________________________
+Assinatura: _____________________________
+Data: ___/___/____
+
+Contato para dúvidas:
+- [Seu Nome] — [Cargo]
+- Email: [seu@email.com]
+- Telefone: [telefone]
+
+OBSERVAÇÃO: Substitua os campos entre colchetes pelas informações reais do cliente e valores antes do envio.

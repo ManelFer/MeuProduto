@@ -1,0 +1,25 @@
+Resumo do Projeto - MeuProduto
+
+Visão geral:
+Aplicação web de gestão comercial para controlar vendas, pedidos, produtos, clientes e usuários, com painel administrativo (dashboard) para operação e relatórios.
+
+Principais funcionalidades:
+- Autenticação e autorização (NextAuth).
+- CRUD de Clientes, Produtos, Pedidos/Ordens, Vendas e Usuários.
+- Painel administrativo com páginas para gerenciar recursos e gerar relatórios.
+- Formulários reutilizáveis e componentes em `src/components`.
+- Relatórios de vendas (incluindo agregação por semana) e opções de impressão para ordens/vendas.
+
+Tecnologia e arquitetura:
+- Next.js (app router) com TypeScript.
+- ORM: Prisma (migrations em prisma/migrations, esquema em prisma/schema.prisma).
+- Estilos: Tailwind CSS.
+- Organização: rotas e páginas em `src/app`, componentes em `src/components`, libs em `src/lib`.
+
+Manutenção e observações:
+- Scripts utilitários disponíveis (ex.: `scripts/create-user.ts`).
+- Revisar configurações de produção: variáveis de ambiente, banco, hospedagem e backups.
+- Para detalhes técnicos adicionais, posso extrair o diagrama de entidades do `schema.prisma`.
+
+Contato:
+- Para personalização do resumo ou inclusão em propostas, solicite que eu insira nomes, prazos e valores.
